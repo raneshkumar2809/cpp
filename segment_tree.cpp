@@ -1,8 +1,11 @@
-// For range sum
+// for range sum
+// v=1, tl=0, tr=arr.size()-1
 class SegTree{
 public:
     int len;
-    vector<int> t,unpropUpd;
+    vector<int> t; // for point update
+    // for range update
+    vector<int> unpropUpd;
     vector<bool> isLazy;
 
     SegTree(int l){
@@ -12,7 +15,8 @@ public:
         isLazy.resize(4*len);
     }
 
-    void build(vector<int>& a,int v,int tl,int tr){
+    // t: o(n)
+    void build(vector<int>& a,int v=1,int tl=0,int tr=len-1){
         if(tl==tr){
             t[v]=a[tl];
             return;
@@ -23,7 +27,10 @@ public:
         t[v]=t[2*v]+t[2*v+1];
     }
 
-    int query(int v,int tl,int tr,int l,int r){
+    // for point update query
+    // t: o(log(n))
+    // l and r are indices of query, tl and tr are indices of tree
+    int query(int v=1,int tl=0,int tr=len-1,int l,int r){
         if(l>tr || r<tl) return 0;//no overlap
         if(tl>=l && tr<=r) return t[v]; //complete overlap
         int tm=(tl+tr)/2;
@@ -32,8 +39,10 @@ public:
         return left+right;
     }
 
-    //update value of index
-    void update(int v,int tl,int tr,int id,int val){
+    // for point update
+    //t: o(log(n))
+    //id is index to be updated
+    void update(int v=1,int tl=0,int tr=len-1,int id,int val){
         if(tl==id and tr==id){
             t[v]=val;
             return;
@@ -45,9 +54,10 @@ public:
         t[v]=t[2*v]+t[2*v+1];
     }
 
-    //for range update
-    int queryRange(int v,int tl,int tr,int l,int r){
-        if(tl>r || tr<l) return 0;
+    //for range update query
+    // t: o(log(n))
+    int queryRange(int v=1,int tl=0,int tr=len-1,int l,int r){
+        if(tl>r || tr<l1) return 0;
         if(tl>=l && tr=<r) return t[v];
 
         pushDown(v,tl,tr);
@@ -57,7 +67,9 @@ public:
         return left+right;
     }
 
-    void updateRange(int v,int tl,int tr,int l,int r,int val){
+    // for range update
+    // t: o(log(n))
+    void updateRange(int v=1,int tl=0,int tr=len-1,int l,int r,int val){
         if(tl>r && tr<l) return;
         if(l<=tl && tr<=r){
             apply(v,tl,tr,val);
@@ -88,3 +100,5 @@ public:
         unpropUpd[v]=0;
     }
 };
+
+// s: o(n)
