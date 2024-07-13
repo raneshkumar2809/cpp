@@ -87,7 +87,7 @@ public:
             isLazy[v]=true;
             unpropUpd[v]+=val;
         }
-        t[v]=(tr-tl+1)*val;
+        t[v]+=(tr-tl+1)*val;
     }
 
     void pushDown(int v,int t1,int tr){
