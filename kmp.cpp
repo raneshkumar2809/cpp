@@ -1,3 +1,6 @@
+// s contains pattern + '#' + given string
+// we can replace '#' with any characters that is not present in given string
+
 vector<int> kmp(string s){
     vector<int> lps(s.size(),0);
     for(int i=1;i<lps.size();i++){
