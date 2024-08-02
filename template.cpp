@@ -8,28 +8,27 @@ using namespace std;
 #define MOD 1000000007
 
 // add fun using mod
-ll add(ll a, ll b){
-    a += b;
-    if(a >= MOD)a -= MOD;
-    return a;
+inline ll add(ll a, ll b) {
+    return (a + b) % MOD;
 }
-// sub fun using mod
-ll sub(ll x,ll y){
-    ll res=x-y;
-    return res<0?res+MOD:res;
+
+// Efficient modular subtraction
+inline ll sub(ll x, ll y) {
+    return (x - y + MOD) % MOD;
 }
-// mul fun using mod
-ll mul(ll a, ll b){
-    a *= b;
-    if(a >= MOD)a %= MOD;
-    return a;
+
+// Efficient modular multiplication
+inline ll multiply(ll a, ll b) {
+    return (a * b) % MOD;
 }
-// power fun using mod
-ll power(ll a, ll b){
+
+// Efficient modular exponentiation (iterative version)
+ll power(ll a, ll b) {
     ll ans = 1;
-    while(b != 0){
-        if(b & 1)ans = mul(ans, a);
-        a = mul(a, a); b >>= 1;
+    while (b > 0) {
+        if (b & 1) ans = multiply(ans, a);
+        a = multiply(a, a);
+        b >>= 1;
     }
     return ans;
 }
@@ -79,7 +78,7 @@ long long nextPrime(long long n) {
 }
 
 void fun(){
-
+    
 }
 
 int main() {
